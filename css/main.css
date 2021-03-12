@@ -211,3 +211,12 @@ body {
 .dark-textarea{
   background-color: #ede6ad;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EDE6AD; 
+  border-radius: 6px;
+}

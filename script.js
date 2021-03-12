@@ -1,6 +1,7 @@
 let boxMessage = document.querySelector("#box-chat"); // div de display
 let sendMessage = document.querySelector(".sendMessage"); //Button submit
 let message = document.querySelector("#message"); //id du text area
+let delMessage = document.querySelector("sendMessage"); //Button submit
 
 sendMessage.addEventListener('click', function(event){
     event.preventDefault();
@@ -16,16 +17,35 @@ sendMessage.addEventListener('click', function(event){
     })
 })
 
+/*delMessage.addEventListener('click', function(event){
+    event.preventDefault();
+
+    let formDataDel = new FormData()
+    formDataDel.append('message', message.value)
+    fetch('index.php', {
+        method:'post',
+        body: formDataDel
+    }).then(()=>{
+        message.value=""
+        refresh()
+    })
+})*/
+
+
 function refresh(){
+
+
     fetch("display-message.php").then((Response)=>{
         return Response.text()
     }).then((data)=>{
         boxMessage.innerHTML = data
+    }).catch((e)=>{
+        
     })
 }
 
 document.querySelector('.switch').addEventListener('click',(e)=>{
-
+    console.log(e);
     if(e.target.checked){
       document.querySelector('body').classList.add('body-page')
       document.querySelector('.topnav').classList.add('dark-nav')
@@ -44,3 +64,9 @@ document.querySelector('.switch').addEventListener('click',(e)=>{
       document.querySelector('.textareaZone').classList.remove('dark-textarea')
     }
   })
+
+    function isTyping() {
+                document.getElementById('typing_on').innerHTML = "Un utilisateur écrit ... "; }
+
+    function  notTyping (){
+       document.getElementById('typing_on').innerHTML = ""; }

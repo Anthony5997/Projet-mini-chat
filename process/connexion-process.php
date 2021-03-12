@@ -11,21 +11,25 @@ if (isset($_POST['mailVerif']) && !empty($_POST['mailVerif']) && isset($_POST['p
     $result->execute();
 
     $users = $result->fetchAll(PDO::FETCH_ASSOC);
-    foreach($users as $user){
-        $pseudoBdd = $user['pseudo'];
-        $passBdd = $user['pwd'];
-        $typeUser = $user['user_type']; 
-        $colorUser = $user['color'];      
-    }
-    if(strtolower($pseudoVerif) == strtolower($pseudoBdd) && $passCrypt == $passBdd) {
+    if ($users) {
+        foreach($users as $user){
+            $pseudoBdd = $user['pseudo'];
+            $passBdd = $user['pwd'];
+            $typeUser = $user['user_type']; 
+            $colorUser = $user['color'];      
+        }   
+        if( strtolower($pseudoVerif) == strtolower($pseudoBdd) && $passCrypt == $passBdd) {
             $_SESSION['user'] = $pseudoVerif;
             $_SESSION['pwd'] = $passCrypt;
-            $_SESSION['connect'] = 1;
+            $_SESSION['connect'] = 1; 
             $_SESSION['status'] = $typeUser;
             $_SESSION['color'] = $colorUser;
             header("Location: ../index.php?message=Connexion réussis.");
+        }else{
+            header("Location: ../index.php?message=Identifiants ou mot de passe incorrecte.");
+        }
     }else{
-        header("Location: ../index.php?message=Identifiants ou mot de passe incorrecte.");
+        header("Location: ../index.php?message=L'utilisateur est inconnue");
     }
 }else{
     header("Location: ../index.php?message=Veuiller remplir les champs pour vous.");
